@@ -1,0 +1,8 @@
+asgiref
+Django
+django-dotenv
+django-environ
+djangorestframework
+pytz
+sqlparse
+tzdata
