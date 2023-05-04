@@ -1,16 +1,17 @@
-#!/usr/bin/env/ node
+#!/usr/bin/env node
 
 import inquirer from "inquirer";
 import fs from 'fs';
-import path from 'path';
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const Cur_Dir = process.cwd()
 
 const options = fs.readdirSync(
-    path.resolve(
-        './template',
-    ),
-    'utf-8',
+        `${__dirname}/template`
 );
 
 const questions = [
@@ -41,7 +42,7 @@ inquirer.prompt(questions).then(answers => {
 
 
 function createDir(project, name) {
-    const template = `./template/${project}`
+    const template = `${__dirname}/template/${project}`
 
     const fileTOcreate = fs.readdirSync(template);
 
