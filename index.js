@@ -1,3 +1,5 @@
+#!/usr/bin/env/ node
+
 import inquirer from "inquirer";
 import fs from 'fs';
 import path from 'path';
@@ -31,11 +33,32 @@ const questions = [
 
 
 inquirer.prompt(questions).then(answers => {
-    console.log(answers)
     const project = answers['project']
     const name = answers['project-name']
-    const template = `./${project}`
 
-    fs.mkdirSync(`${Cur_Dir}/${name}`);
+    createDir(project,name)
 })
 
+
+function createDir(project, name) {
+    const template = `./template/${project}`
+
+    const fileTOcreate = fs.readdirSync(template);
+
+    fs.mkdirSync(`${Cur_Dir}/${name}`);
+
+    fileTOcreate.forEach(file => {
+        const origFilePath = `${template}/${file}`
+
+        const stats = fs.statSync(origFilePath)
+
+        if(stats.isFile()) {
+            const contents = fs.readFileSync(origFilePath, 'utf8')
+            const writePath = `${Cur_Dir}/${name}/${file}`
+            fs.writeFileSync(writePath, contents, 'utf8')
+        } else if (stats.isDirectory()) {
+            createDir(`${project}/${file}`, `${name}/${file}`);
+        }
+    })
+
+}
