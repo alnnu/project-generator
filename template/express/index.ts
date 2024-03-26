@@ -1,5 +1,5 @@
 import express, {Express, Request, Response} from "express"
-//todo: create docker
+
 import 'dotenv/config'
 
 const app: Express = express();
