@@ -1,10 +1,11 @@
 import express, {Express, Request, Response} from "express"
-import dotenv from "dotenv"
+//todo: create docker
+import 'dotenv/config'
 
 const app: Express = express();
 
 
-const port: Number = 3000;
+const port = process.env.PORT;
 
 app.get("/", (req: Request, res: Response) => {
         res.send({
